@@ -6,11 +6,16 @@ public class LevelUIController : MonoBehaviour
 {
     [SerializeField] private GameObject pausePanel;
 
+    // Awake so RunStats is ready before any Start reads it
+    void Awake() => RunStats.BeginLevel(SceneLoader.Level1, "The Awakening Halls", 4);
+
     void Start()
     {
-        RunStats.BeginLevel(SceneLoader.Level1, "The Awakening Halls", 4);
         GameManager.Instance.OnStateChanged += HandleState;
         HandleState(GameManager.Instance.State);
+
+        var health = FindFirstObjectByType<Health>();
+        if (health != null) health.OnDied += GameManager.Instance.Lose;
     }
 
     void OnDestroy()
@@ -19,10 +24,15 @@ public class LevelUIController : MonoBehaviour
             GameManager.Instance.OnStateChanged -= HandleState;
     }
 
-    // Esc toggles pause
+    // Esc toggles pause, H is a temp damage key until traps exist
     void Update()
     {
-        if (Keyboard.current == null || !Keyboard.current.escapeKey.wasPressedThisFrame) return;
+        if (Keyboard.current == null) return;
+
+        if (Keyboard.current.hKey.wasPressedThisFrame && GameManager.Instance.State == GameManager.GameState.Playing)
+            FindFirstObjectByType<Health>()?.TakeDamage(25);
+
+        if (!Keyboard.current.escapeKey.wasPressedThisFrame) return;
         if (GameManager.Instance.State == GameManager.GameState.Playing) GameManager.Instance.Pause();
         else if (GameManager.Instance.State == GameManager.GameState.Paused) GameManager.Instance.Resume();
     }
