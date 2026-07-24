@@ -77,7 +77,11 @@ public class PlayerController : MonoBehaviour
             if (kb.dKey.isPressed || kb.rightArrowKey.isPressed) input.x += 1;
             if (kb.aKey.isPressed || kb.leftArrowKey.isPressed) input.x -= 1;
         }
-        if (Gamepad.current != null) input += Gamepad.current.leftStick.ReadValue();
+        if (Gamepad.current != null)
+        {
+            Vector2 stick = Gamepad.current.leftStick.ReadValue();
+            if (stick.magnitude > 0.15f) input += stick;   // deadzone kills stick drift
+        }
         return Vector2.ClampMagnitude(input, 1f);
     }
 }
