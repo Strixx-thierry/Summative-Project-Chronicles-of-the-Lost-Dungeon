@@ -1,9 +1,29 @@
 fileFormatVersion: 2
-guid: e08fbc5be9ad6474ebd54eb356a199cb
+guid: dd9bb7592e60d6244a249486b3a7a556
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: MAW_diffuse
+    second: {fileID: 2800000, guid: 881da4fc3eb95414a81e1dfbb45d8466, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: MAW_glow
+    second: {fileID: 2800000, guid: 59fe108f057555d47a6cfff7b7174faa, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: MAW_normal
+    second: {fileID: 2800000, guid: 05a4bd4a1e366f6448af939d5a3958a7, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: maria_specular
+    second: {fileID: 2800000, guid: 2a6f5173586fe1e48859ac2eac846923, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
