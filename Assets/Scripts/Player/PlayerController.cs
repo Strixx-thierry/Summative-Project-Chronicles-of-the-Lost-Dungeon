@@ -9,13 +9,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float sprintSpeed = 6.5f;
     [SerializeField] private float turnSpeed = 14f;
     [SerializeField] private Transform model;
+    [SerializeField] private float modelYawOffset = 0f;   // mesh orientation baked into the model pivot
 
     private Rigidbody rb;
     private CameraFollow cam;
     private Animator animator;
-    private bool hasProceduralAnimator;
+    private ProceduralAnimator proc;
+    private Quaternion offset;
 
-    // Direction the model should face; the animator composes tilt on top of this
+    // Direction the model should face; the procedural animator composes tilt on top of this
     public Quaternion ModelFacing { get; private set; } = Quaternion.identity;
 
     void Awake()
@@ -24,8 +26,9 @@ public class PlayerController : MonoBehaviour
         rb.freezeRotation = true;
         if (model == null && transform.childCount > 0) model = transform.GetChild(0);
         animator = GetComponentInChildren<Animator>();
-        hasProceduralAnimator = GetComponentInChildren<ProceduralAnimator>() != null;
-        if (model != null) ModelFacing = model.rotation;
+        proc = GetComponentInChildren<ProceduralAnimator>();
+        offset = Quaternion.Euler(0, modelYawOffset, 0);
+        ModelFacing = Quaternion.LookRotation(Vector3.forward) * offset;   // face into the room at start
     }
 
     void Start() => cam = Camera.main != null ? Camera.main.GetComponent<CameraFollow>() : null;
@@ -51,10 +54,11 @@ public class PlayerController : MonoBehaviour
         rb.linearVelocity = new Vector3(move.x * speed, rb.linearVelocity.y, move.z * speed);
 
         if (move.sqrMagnitude > 0.01f)
-            ModelFacing = Quaternion.Slerp(ModelFacing, Quaternion.LookRotation(move), turnSpeed * Time.fixedDeltaTime);
+            ModelFacing = Quaternion.Slerp(ModelFacing, Quaternion.LookRotation(move) * offset, turnSpeed * Time.fixedDeltaTime);
 
-        // Apply facing directly only when no procedural animator owns the model
-        if (!hasProceduralAnimator && model != null)
+        // Apply facing here unless the procedural animator is active and owns the model
+        bool procActive = proc != null && proc.enabled;
+        if (!procActive && model != null)
             model.rotation = ModelFacing;
 
         // Feeds the animator once clips are imported
