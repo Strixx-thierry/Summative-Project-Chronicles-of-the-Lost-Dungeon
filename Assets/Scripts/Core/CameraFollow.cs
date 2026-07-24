@@ -15,6 +15,12 @@ public class CameraFollow : MonoBehaviour
 
     void Start()
     {
+        // Self-heal: grab the player if the reference was lost
+        if (target == null)
+        {
+            var player = GameObject.Find("Player");
+            if (player != null) target = player.transform;
+        }
         if (target != null) yaw = target.eulerAngles.y;
         LockCursor(true);
     }
