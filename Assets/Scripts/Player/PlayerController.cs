@@ -13,6 +13,10 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     private CameraFollow cam;
     private Animator animator;
+    private bool hasProceduralAnimator;
+
+    // Direction the model should face; the animator composes tilt on top of this
+    public Quaternion ModelFacing { get; private set; } = Quaternion.identity;
 
     void Awake()
     {
@@ -20,9 +24,18 @@ public class PlayerController : MonoBehaviour
         rb.freezeRotation = true;
         if (model == null && transform.childCount > 0) model = transform.GetChild(0);
         animator = GetComponentInChildren<Animator>();
+        hasProceduralAnimator = GetComponentInChildren<ProceduralAnimator>() != null;
+        if (model != null) ModelFacing = model.rotation;
     }
 
     void Start() => cam = Camera.main != null ? Camera.main.GetComponent<CameraFollow>() : null;
+
+    void Update()
+    {
+        // Left click swings; the animator plays the attack state
+        if (animator != null && Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
+            animator.SetTrigger("Attack");
+    }
 
     void FixedUpdate()
     {
@@ -37,8 +50,12 @@ public class PlayerController : MonoBehaviour
 
         rb.linearVelocity = new Vector3(move.x * speed, rb.linearVelocity.y, move.z * speed);
 
-        if (move.sqrMagnitude > 0.01f && model != null)
-            model.rotation = Quaternion.Slerp(model.rotation, Quaternion.LookRotation(move), turnSpeed * Time.fixedDeltaTime);
+        if (move.sqrMagnitude > 0.01f)
+            ModelFacing = Quaternion.Slerp(ModelFacing, Quaternion.LookRotation(move), turnSpeed * Time.fixedDeltaTime);
+
+        // Apply facing directly only when no procedural animator owns the model
+        if (!hasProceduralAnimator && model != null)
+            model.rotation = ModelFacing;
 
         // Feeds the animator once clips are imported
         if (animator != null)
