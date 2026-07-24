@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private int defense = 0;
-    [SerializeField] private float deathDelay = 0.2f;
+    [SerializeField] private float deathDelay = 1.8f;   // let the death animation play
 
     public int Defense => defense;
 
