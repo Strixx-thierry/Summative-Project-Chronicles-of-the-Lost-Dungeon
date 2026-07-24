@@ -2,12 +2,13 @@ using UnityEngine;
 using System;
 
 // Hit points with events so UI and game flow react without direct references
-public class Health : MonoBehaviour
+public class Health : MonoBehaviour, IDamageable
 {
     [SerializeField] private int maxHealth = 200;
 
     public int Current { get; private set; }
     public int Max => maxHealth;
+    public bool IsDead => Current <= 0;
 
     public event Action<int, int> OnChanged;
     public event Action OnDied;
