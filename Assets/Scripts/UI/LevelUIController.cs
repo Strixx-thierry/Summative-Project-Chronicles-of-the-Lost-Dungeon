@@ -14,7 +14,8 @@ public class LevelUIController : MonoBehaviour
         GameManager.Instance.OnStateChanged += HandleState;
         HandleState(GameManager.Instance.State);
 
-        var health = FindFirstObjectByType<Health>();
+        var player = FindFirstObjectByType<PlayerController>();
+        var health = player != null ? player.GetComponent<Health>() : null;
         if (health != null) health.OnDied += GameManager.Instance.Lose;
     }
 
@@ -30,7 +31,7 @@ public class LevelUIController : MonoBehaviour
         if (Keyboard.current == null) return;
 
         if (Keyboard.current.hKey.wasPressedThisFrame && GameManager.Instance.State == GameManager.GameState.Playing)
-            FindFirstObjectByType<Health>()?.TakeDamage(25);
+            FindFirstObjectByType<PlayerController>()?.GetComponent<Health>()?.TakeDamage(25);
 
         if (!Keyboard.current.escapeKey.wasPressedThisFrame) return;
         if (GameManager.Instance.State == GameManager.GameState.Playing) GameManager.Instance.Pause();

@@ -18,7 +18,8 @@ public class HUDController : MonoBehaviour
 
     void Start()
     {
-        var health = FindFirstObjectByType<Health>();
+        var player = FindFirstObjectByType<PlayerController>();
+        var health = player != null ? player.GetComponent<Health>() : null;
         if (health != null)
         {
             health.OnChanged += SetHealth;
