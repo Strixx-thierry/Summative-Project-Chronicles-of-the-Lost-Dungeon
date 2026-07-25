@@ -21,12 +21,12 @@ public class GameManager : MonoBehaviour
         SceneManager.sceneLoaded += (_, _) => SetState(GameState.Playing);
     }
 
-    // Win saves completion, lose does not - progress is only kept after finishing
+    // Win saves completion and unlocks the next level; lose keeps nothing
     public void Win()
     {
         SetState(GameState.Won);
         RunStats.EndRun();
-        PlayerPrefs.SetInt(RunStats.LevelScene + "_Completed", 1); // temp save until JSON system
+        SaveManager.Instance.CompleteLevel(RunStats.LevelNumber, RunStats.Coins);
         SceneLoader.Load(SceneLoader.LevelComplete);
     }
 
