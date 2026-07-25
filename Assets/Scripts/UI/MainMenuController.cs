@@ -9,12 +9,25 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private GameObject levelSelectPanel;
     [SerializeField] private GameObject namePanel;
     [SerializeField] private TMP_InputField nameInput;
+    [SerializeField] private GameObject[] classHighlights;   // amber frame per class button
+
+    private int chosenClass = 0;
 
     public void OnStartClicked()
     {
-        // First time: ask for a name, then start. Otherwise begin a new run at level 1.
-        if (!SaveManager.Instance.HasName) ShowOnly(namePanel);
-        else SceneLoader.Load(SceneLoader.Level1);
+        // Always open Create Character, pre-filled, so you can keep or change name/class
+        var data = SaveManager.Instance.Data;
+        if (nameInput != null && !string.IsNullOrWhiteSpace(data.playerName)) nameInput.text = data.playerName;
+        OnSelectClass(data.selectedClass);
+        ShowOnly(namePanel);
+    }
+
+    public void OnSelectClass(int index)
+    {
+        chosenClass = index;
+        if (classHighlights == null) return;
+        for (int i = 0; i < classHighlights.Length; i++)
+            if (classHighlights[i] != null) classHighlights[i].SetActive(i == index);
     }
 
     public void OnNameConfirm()
@@ -22,6 +35,7 @@ public class MainMenuController : MonoBehaviour
         string name = nameInput != null ? nameInput.text : "";
         if (string.IsNullOrWhiteSpace(name)) name = "Adventurer";
         SaveManager.Instance.SetName(name);
+        SaveManager.Instance.SetClass(chosenClass);
         SceneLoader.Load(SceneLoader.Level1);
     }
 

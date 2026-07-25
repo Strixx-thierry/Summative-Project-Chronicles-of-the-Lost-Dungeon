@@ -43,6 +43,12 @@ public class SaveManager : MonoBehaviour
         Save();
     }
 
+    public void SetClass(int index)
+    {
+        Data.selectedClass = index;
+        Save();
+    }
+
     public void CompleteLevel(int level, int coins, float time)
     {
         if (!Data.completed.Contains(level)) Data.completed.Add(level);

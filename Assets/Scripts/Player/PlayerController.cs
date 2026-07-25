@@ -25,20 +25,19 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         if (model == null && transform.childCount > 0) model = transform.GetChild(0);
-        animator = GetComponentInChildren<Animator>();
         proc = GetComponentInChildren<ProceduralAnimator>();
         offset = Quaternion.Euler(0, modelYawOffset, 0);
         ModelFacing = Quaternion.LookRotation(Vector3.forward) * offset;   // face into the room at start
     }
 
-    void Start() => cam = Camera.main != null ? Camera.main.GetComponent<CameraFollow>() : null;
-
-    void Update()
+    void Start()
     {
-        // Left click swings; the animator plays the attack state
-        if (animator != null && Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
-            animator.SetTrigger("Attack");
+        cam = Camera.main != null ? Camera.main.GetComponent<CameraFollow>() : null;
+        // Fetched in Start so it sees the class model swapped in during Awake
+        animator = GetComponentInChildren<Animator>();
     }
+
+    // Attacks are handled by AbilityController now
 
     void FixedUpdate()
     {
