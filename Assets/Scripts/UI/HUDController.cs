@@ -13,6 +13,8 @@ public class HUDController : MonoBehaviour
     [SerializeField] private TMP_Text objectiveCountText;
     [SerializeField] private Image objectiveFill;
 
+    private TMP_Text timerText;
+
     static readonly Color SegmentOn = new Color(0.70f, 0.23f, 0.23f);
     static readonly Color SegmentOff = new Color(0.10f, 0.11f, 0.13f);
 
@@ -27,8 +29,35 @@ public class HUDController : MonoBehaviour
         }
         SetCoins(0);
         SetKeys(0);
-        levelNameText.text = "Level 1 — " + RunStats.LevelName;
+        levelNameText.text = "Level " + RunStats.LevelNumber + " — " + RunStats.LevelName;
         SetObjective(RunStats.EnemiesDefeated, RunStats.TotalEnemies);
+        CreateTimer();
+    }
+
+    void Update()
+    {
+        if (timerText != null) timerText.text = RunStats.FormattedElapsed;
+    }
+
+    // Builds a top-centre timer at runtime so every level scene gets one
+    void CreateTimer()
+    {
+        var go = new GameObject("Timer", typeof(RectTransform));
+        go.transform.SetParent(transform, false);
+        var rt = go.GetComponent<RectTransform>();
+        rt.anchorMin = new Vector2(0.5f, 1f);
+        rt.anchorMax = new Vector2(0.5f, 1f);
+        rt.pivot = new Vector2(0.5f, 1f);
+        rt.anchoredPosition = new Vector2(0, -24);
+        rt.sizeDelta = new Vector2(240, 60);
+
+        timerText = go.AddComponent<TextMeshProUGUI>();
+        timerText.font = TMP_Settings.defaultFontAsset;
+        timerText.fontSize = 40;
+        timerText.color = new Color(0.91f, 0.90f, 0.86f);
+        timerText.alignment = TextAlignmentOptions.Center;
+        timerText.fontStyle = FontStyles.Bold;
+        timerText.text = "00:00";
     }
 
     public void SetHealth(int current, int max)

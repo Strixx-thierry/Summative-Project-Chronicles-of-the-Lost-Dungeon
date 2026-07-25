@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
     {
         SetState(GameState.Won);
         RunStats.EndRun();
-        SaveManager.Instance.CompleteLevel(RunStats.LevelNumber, RunStats.Coins);
+        SaveManager.Instance.CompleteLevel(RunStats.LevelNumber, RunStats.Coins, RunStats.TimeTaken);
         SceneLoader.Load(SceneLoader.LevelComplete);
     }
 

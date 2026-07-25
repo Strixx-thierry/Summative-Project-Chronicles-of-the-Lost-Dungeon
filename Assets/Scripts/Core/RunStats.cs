@@ -27,6 +27,12 @@ public static class RunStats
 
     public static void EndRun() => TimeTaken = Time.time - startTime;
 
-    public static string FormattedTime =>
-        $"{(int)TimeTaken / 60:00}:{(int)TimeTaken % 60:00}";
+    // Time.time is scaled, so it stops during pause - pauses aren't counted
+    public static float Elapsed => Time.time - startTime;
+
+    public static string FormattedTime => Format(TimeTaken);
+    public static string FormattedElapsed => Format(Elapsed);
+
+    public static string Format(float seconds) =>
+        $"{(int)seconds / 60:00}:{(int)seconds % 60:00}";
 }

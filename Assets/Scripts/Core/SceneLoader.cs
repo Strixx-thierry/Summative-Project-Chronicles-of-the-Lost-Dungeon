@@ -4,7 +4,11 @@ using UnityEngine.SceneManagement;
 // Central place for scene changes
 public static class SceneLoader
 {
+    public const int TotalLevels = 5;
+
     public const string MainMenu = "MainMenu";
+    public const string LevelSelect = "LevelSelect";
+    public const string Leaderboard = "Leaderboard";
     public const string Level1 = "Level1";
     public const string GameOver = "GameOver";
     public const string LevelComplete = "LevelComplete";

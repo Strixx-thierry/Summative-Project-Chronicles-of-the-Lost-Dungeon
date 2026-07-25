@@ -1,22 +1,38 @@
 using UnityEngine;
 using TMPro;
 
-// Fills the Level Complete screen with run stats
+// Fills the Level Complete screen; the final level routes to the leaderboard scene
 public class LevelCompleteController : MonoBehaviour
 {
     [SerializeField] private TMP_Text goldValue;
     [SerializeField] private TMP_Text enemiesValue;
     [SerializeField] private TMP_Text timeValue;
+    [SerializeField] private TMP_Text titleText;
+    [SerializeField] private TMP_Text nextButtonLabel;
+
+    private bool isFinalLevel;
 
     void Start()
     {
         goldValue.text = RunStats.Coins.ToString("N0");
         enemiesValue.text = RunStats.EnemiesDefeated.ToString();
         timeValue.text = RunStats.FormattedTime;
+
+        isFinalLevel = RunStats.LevelNumber >= SceneLoader.TotalLevels;
+        if (isFinalLevel)
+        {
+            if (titleText != null) titleText.text = "DUNGEON CONQUERED";
+            if (nextButtonLabel != null) nextButtonLabel.text = "LEADERBOARD";
+        }
     }
 
-    // Load the next level, or fall back to the menu if there isn't one
-    public void OnNextLevel() { Click(); SceneLoader.LoadLevel(RunStats.LevelNumber + 1); }
+    public void OnNextLevel()
+    {
+        Click();
+        if (isFinalLevel) SceneLoader.Load(SceneLoader.Leaderboard);
+        else SceneLoader.LoadLevel(RunStats.LevelNumber + 1);
+    }
+
     public void OnLevelSelect() { Click(); SceneLoader.Load(SceneLoader.MainMenu); }
 
     void Click() { if (AudioManager.Instance != null) AudioManager.Instance.PlayClick(); }
