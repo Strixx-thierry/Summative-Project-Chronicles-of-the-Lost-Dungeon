@@ -1,13 +1,13 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-// Third-person follow camera; orbits only while right mouse is held (stable otherwise)
+// Souls-like third-person camera: move the mouse to orbit freely around the player
 public class CameraFollow : MonoBehaviour
 {
     [SerializeField] private Transform target;
     [SerializeField] private float distance = 5f;
     [SerializeField] private float height = 2.2f;
-    [SerializeField] private float sensitivity = 0.15f;
+    [SerializeField] private float sensitivity = 0.12f;
     [SerializeField] private float smoothing = 12f;
 
     private float yaw;
@@ -28,20 +28,28 @@ public class CameraFollow : MonoBehaviour
     {
         if (target == null) return;
 
-        var mouse = Mouse.current;
-        if (mouse != null && mouse.rightButton.isPressed)
+        // Free the cursor while paused, capture it while playing
+        bool playing = GameManager.Instance == null || GameManager.Instance.State == GameManager.GameState.Playing;
+        Cursor.lockState = playing ? CursorLockMode.Locked : CursorLockMode.None;
+        Cursor.visible = !playing;
+
+        if (playing)
         {
-            Vector2 d = mouse.delta.ReadValue();
-            yaw += d.x * sensitivity;
-            pitch = Mathf.Clamp(pitch - d.y * sensitivity, -5f, 60f);
-        }
-        if (Gamepad.current != null)
-        {
-            Vector2 s = Gamepad.current.rightStick.ReadValue();
-            if (s.magnitude > 0.15f)
+            var mouse = Mouse.current;
+            if (mouse != null)
             {
-                yaw += s.x * sensitivity * 10f;
-                pitch = Mathf.Clamp(pitch - s.y * sensitivity * 8f, -5f, 60f);
+                Vector2 d = mouse.delta.ReadValue();
+                yaw += d.x * sensitivity;
+                pitch = Mathf.Clamp(pitch - d.y * sensitivity, -10f, 60f);
+            }
+            if (Gamepad.current != null)
+            {
+                Vector2 s = Gamepad.current.rightStick.ReadValue();
+                if (s.magnitude > 0.15f)
+                {
+                    yaw += s.x * sensitivity * 12f;
+                    pitch = Mathf.Clamp(pitch - s.y * sensitivity * 8f, -10f, 60f);
+                }
             }
         }
 
