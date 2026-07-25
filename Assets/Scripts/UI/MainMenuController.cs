@@ -8,6 +8,9 @@ public class MainMenuController : MonoBehaviour
 
     public void OnStartClicked() => SceneLoader.Load(SceneLoader.Level1);
 
+    // Continue from the furthest unlocked level
+    public void OnContinueClicked() => SceneLoader.LoadLevel(SaveManager.Instance.Data.highestUnlocked);
+
     public void OnSettingsClicked()
     {
         mainMenuPanel.SetActive(false);

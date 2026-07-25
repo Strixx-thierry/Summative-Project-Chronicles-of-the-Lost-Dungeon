@@ -15,8 +15,8 @@ public class LevelCompleteController : MonoBehaviour
         timeValue.text = RunStats.FormattedTime;
     }
 
-    // Next level does not exist yet, back to menu for now
-    public void OnNextLevel() { Click(); SceneLoader.Load(SceneLoader.MainMenu); }
+    // Load the next level, or fall back to the menu if there isn't one
+    public void OnNextLevel() { Click(); SceneLoader.LoadLevel(RunStats.LevelNumber + 1); }
     public void OnLevelSelect() { Click(); SceneLoader.Load(SceneLoader.MainMenu); }
 
     void Click() { if (AudioManager.Instance != null) AudioManager.Instance.PlayClick(); }

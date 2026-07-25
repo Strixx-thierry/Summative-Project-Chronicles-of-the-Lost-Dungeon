@@ -8,8 +8,8 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private float range = 2.4f;
     [SerializeField] private float arc = 140f;
     [SerializeField] private float cooldown = 0.5f;
-    [SerializeField] private int baseDamage = 30;
-    [SerializeField] private float critChance = 0.2f;
+    [SerializeField] private int baseDamage = 40;
+    [SerializeField] private float critChance = 0f;   // flat damage so hits-to-kill are exact
 
     private float timer;
 

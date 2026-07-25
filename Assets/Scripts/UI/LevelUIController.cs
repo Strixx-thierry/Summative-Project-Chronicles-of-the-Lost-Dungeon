@@ -7,7 +7,12 @@ public class LevelUIController : MonoBehaviour
     [SerializeField] private GameObject pausePanel;
 
     // Awake so RunStats is ready before any Start reads it
-    void Awake() => RunStats.BeginLevel(SceneLoader.Level1, "The Awakening Halls", 4);
+    void Awake()
+    {
+        var info = FindFirstObjectByType<LevelInfo>();
+        RunStats.BeginLevel(info != null ? info.levelNumber : 1,
+                            info != null ? info.displayName : "The Awakening Halls");
+    }
 
     void Start()
     {
