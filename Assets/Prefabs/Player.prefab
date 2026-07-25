@@ -45,7 +45,8 @@ GameObject:
   - component: {fileID: 5995765462062433904}
   - component: {fileID: 8616184754859543999}
   - component: {fileID: 3036183857787193363}
-  - component: {fileID: 4462702408636146117}
+  - component: {fileID: 4461852282490274811}
+  - component: {fileID: 7234456760069751372}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -149,7 +150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Health
   maxHealth: 200
---- !u!114 &4462702408636146117
+--- !u!114 &4461852282490274811
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -158,15 +159,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 4768648423110369259}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ccc17a508fc68eb4ebe5b9601c424551, type: 3}
+  m_Script: {fileID: 11500000, guid: 53737a77f6586634f8f4c49afb5f53e3, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerAttack
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerModelLoader
+  yaw: {fileID: 7231220732618729014}
+  controller: {fileID: 9100000, guid: 53d7c133793eefa4bb3cf51756716ed5, type: 2}
+--- !u!114 &7234456760069751372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4768648423110369259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3191fdea5c6a4dc49a7abb9931591200, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AbilityController
   facing: {fileID: 7231220732618729014}
-  range: 2.4
-  arc: 140
-  cooldown: 0.5
-  baseDamage: 30
-  critChance: 0.2
+  projectilePrefab: {fileID: 6239972580356961137, guid: 59cd5ed5a7b2e4c45bb0ce4b2bfd6a92, type: 3}
+  baseDamage: 40
 --- !u!1001 &7103773544906319061
 PrefabInstance:
   m_ObjectHideFlags: 0
