@@ -29,7 +29,12 @@ public class Enemy : MonoBehaviour
         dead = true;
         RunStats.EnemiesDefeated++;
         GameEvents.RaiseEnemyDefeated();
+
+        // Freeze the body so it stays put while the death animation plays
+        var rb = GetComponent<Rigidbody>();
+        if (rb != null) { rb.linearVelocity = Vector3.zero; rb.isKinematic = true; }
         foreach (var col in GetComponentsInChildren<Collider>()) col.enabled = false;
+
         Destroy(gameObject, deathDelay);
     }
 }
