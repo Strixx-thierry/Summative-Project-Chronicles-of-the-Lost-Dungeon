@@ -7,6 +7,6 @@ public class EnemyIdleState : IEnemyState
     {
         if (enemy.Player == null) return;
         if (enemy.DistanceToPlayer() <= enemy.DetectRange)
-            enemy.SetState(new EnemyChaseState());
+            enemy.SetState(new EnemyAlertState());
     }
 }

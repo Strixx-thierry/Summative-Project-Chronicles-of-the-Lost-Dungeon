@@ -4,7 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class EnemyAI : MonoBehaviour
 {
-    [SerializeField] private float detectRange = 9f;
+    [SerializeField] private float detectRange = 12f;
     [SerializeField] private float attackRange = 2.2f;
     [SerializeField] private float moveSpeed = 2.5f;
     [SerializeField] private float turnSpeed = 8f;
@@ -88,6 +88,11 @@ public class EnemyAI : MonoBehaviour
     public void TriggerAttack()
     {
         if (Animator != null) Animator.SetTrigger("Attack");
+    }
+
+    public void TriggerTaunt()
+    {
+        if (Animator != null) Animator.SetTrigger("Taunt");
     }
 
     // Called at the swing; only lands if the player is still in range
