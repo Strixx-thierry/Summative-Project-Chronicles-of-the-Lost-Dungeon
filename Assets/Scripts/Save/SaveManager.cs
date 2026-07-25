@@ -35,12 +35,24 @@ public class SaveManager : MonoBehaviour
 
     public bool IsUnlocked(int level) => level <= Data.highestUnlocked;
     public bool IsCompleted(int level) => Data.completed.Contains(level);
+    public bool HasName => !string.IsNullOrWhiteSpace(Data.playerName);
 
-    public void CompleteLevel(int level, int coins)
+    public void SetName(string name)
+    {
+        Data.playerName = name.Trim();
+        Save();
+    }
+
+    public void CompleteLevel(int level, int coins, float time)
     {
         if (!Data.completed.Contains(level)) Data.completed.Add(level);
         if (level + 1 > Data.highestUnlocked) Data.highestUnlocked = level + 1;
         Data.totalCoins += coins;
+
+        while (Data.bestTimes.Count < level) Data.bestTimes.Add(0f);
+        float prev = Data.bestTimes[level - 1];
+        if (prev <= 0f || time < prev) Data.bestTimes[level - 1] = time;
+
         Save();
     }
 }
