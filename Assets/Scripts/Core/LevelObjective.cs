@@ -13,6 +13,9 @@ public class LevelObjective : MonoBehaviour
 
     void Start()
     {
+        // Self-heal: find the portal if the reference was lost
+        if (portal == null) portal = FindFirstObjectByType<Portal>();
+
         total = FindObjectsByType<Enemy>(FindObjectsSortMode.None).Length;
         RunStats.TotalEnemies = total;
         defeated = 0;
