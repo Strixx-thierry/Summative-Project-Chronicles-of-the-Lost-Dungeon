@@ -1,41 +1,28 @@
 using UnityEngine;
 
-// One simple exit: red while enemies remain, bright blue when cleared, wins on entry
+// The exit: red while locked, blue once opened by the ObjectiveManager, wins on entry
 public class ExitPortal : MonoBehaviour
 {
     [SerializeField] private Light glow;
     [SerializeField] private Renderer beam;
 
     static readonly Color Locked = new Color(0.85f, 0.2f, 0.15f);
-    static readonly Color Open = new Color(0.3f, 0.8f, 1f);
+    static readonly Color OpenColor = new Color(0.3f, 0.8f, 1f);
 
-    private int total;
-    private int defeated;
     private bool open;
 
-    void OnEnable() => GameEvents.EnemyDefeated += OnEnemyDefeated;
-    void OnDisable() => GameEvents.EnemyDefeated -= OnEnemyDefeated;
+    void Start() => SetVisual(false);
 
-    void Start()
+    public void Open()
     {
-        total = FindObjectsByType<Enemy>(FindObjectsSortMode.None).Length;
-        RunStats.TotalEnemies = total;
-        defeated = 0;
-        UpdateHud();
-        SetOpen(total == 0);
+        if (open) return;
+        open = true;
+        SetVisual(true);
     }
 
-    void OnEnemyDefeated()
+    void SetVisual(bool value)
     {
-        defeated++;
-        UpdateHud();
-        if (defeated >= total) SetOpen(true);
-    }
-
-    void SetOpen(bool value)
-    {
-        open = value;
-        Color c = value ? Open : Locked;
+        Color c = value ? OpenColor : Locked;
         if (glow != null)
         {
             glow.color = c;
@@ -55,7 +42,4 @@ public class ExitPortal : MonoBehaviour
         if (other.GetComponentInParent<PlayerController>() == null) return;
         GameManager.Instance.Win();
     }
-
-    void UpdateHud() =>
-        FindFirstObjectByType<HUDController>()?.SetObjective(defeated, total);
 }

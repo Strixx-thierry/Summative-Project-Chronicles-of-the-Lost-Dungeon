@@ -5,7 +5,9 @@ public static class GameEvents
 {
     public static event Action EnemyDefeated;
     public static event Action<int> ItemCollected;
+    public static event Action WeaponCollected;
 
     public static void RaiseEnemyDefeated() => EnemyDefeated?.Invoke();
     public static void RaiseItemCollected(int value) => ItemCollected?.Invoke(value);
+    public static void RaiseWeaponCollected() => WeaponCollected?.Invoke();
 }
