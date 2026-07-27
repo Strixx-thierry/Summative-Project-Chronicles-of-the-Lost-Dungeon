@@ -10,7 +10,7 @@ public class CharacterDatabase : ScriptableObject
         public string displayName = "Knight";
         public GameObject model;                       // the character fbx
         public RuntimeAnimatorController controller;   // built from this model's own clips
-        public AbilityType ability = AbilityType.Sword;
+        public AbilityType ability = AbilityType.SpinSlash;
     }
 
     public Entry[] classes;

@@ -6,7 +6,7 @@ public class PlayerModelLoader : MonoBehaviour
     [SerializeField] private Transform yaw;
     [SerializeField] private RuntimeAnimatorController controller;
 
-    public AbilityType Ability { get; private set; } = AbilityType.Sword;
+    public AbilityType Ability { get; private set; } = AbilityType.SpinSlash;
 
     void Awake()
     {
