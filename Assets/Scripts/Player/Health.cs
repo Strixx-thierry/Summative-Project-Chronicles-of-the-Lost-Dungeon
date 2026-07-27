@@ -11,6 +11,7 @@ public class Health : MonoBehaviour, IDamageable
     public bool IsDead => Current <= 0;
 
     public event Action<int, int> OnChanged;
+    public event Action OnDamaged;
     public event Action OnDied;
 
     void Awake() => Current = maxHealth;
@@ -20,6 +21,7 @@ public class Health : MonoBehaviour, IDamageable
         if (Current <= 0) return;
         Current = Mathf.Max(0, Current - amount);
         OnChanged?.Invoke(Current, maxHealth);
+        OnDamaged?.Invoke();
         if (Current == 0) OnDied?.Invoke();
     }
 
