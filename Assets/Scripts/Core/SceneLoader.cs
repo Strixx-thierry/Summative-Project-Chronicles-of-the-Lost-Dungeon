@@ -8,7 +8,6 @@ public static class SceneLoader
 
     public const string MainMenu = "MainMenu";
     public const string LevelSelect = "LevelSelect";
-    public const string Leaderboard = "Leaderboard";
     public const string Level1 = "Level1";
     public const string GameOver = "GameOver";
     public const string LevelComplete = "LevelComplete";

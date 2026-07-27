@@ -22,14 +22,14 @@ public class LevelCompleteController : MonoBehaviour
         if (isFinalLevel)
         {
             if (titleText != null) titleText.text = "DUNGEON CONQUERED";
-            if (nextButtonLabel != null) nextButtonLabel.text = "LEADERBOARD";
+            if (nextButtonLabel != null) nextButtonLabel.text = "MAIN MENU";
         }
     }
 
     public void OnNextLevel()
     {
         Click();
-        if (isFinalLevel) SceneLoader.Load(SceneLoader.Leaderboard);
+        if (isFinalLevel) SceneLoader.Load(SceneLoader.MainMenu);
         else SceneLoader.LoadLevel(RunStats.LevelNumber + 1);
     }
 
