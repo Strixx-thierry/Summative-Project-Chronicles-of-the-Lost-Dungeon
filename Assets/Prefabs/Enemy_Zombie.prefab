@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1080585610539209795}
   - component: {fileID: 6981952406225299070}
   - component: {fileID: 4981195525137719963}
+  - component: {fileID: 5612424291830649402}
   m_Layer: 0
   m_Name: Enemy_Zombie
   m_TagString: Untagged
@@ -134,6 +135,20 @@ MonoBehaviour:
   attackCooldown: 1.6
   model: {fileID: 4837988501290885540}
   modelYawOffset: 0
+--- !u!114 &5612424291830649402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4425034630271217673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f1ebfcf29eaeff41bb951a9fd212731, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DamageFlash
+  flashColor: {r: 1, g: 0.2, b: 0.15, a: 1}
+  duration: 0.12
 --- !u!1001 &4947562175123375695
 PrefabInstance:
   m_ObjectHideFlags: 0

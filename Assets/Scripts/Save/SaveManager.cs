@@ -46,6 +46,13 @@ public class SaveManager : MonoBehaviour
     public void SetClass(int index)
     {
         Data.selectedClass = index;
+        Data.specialUnlocked = false;   // a fresh character hasn't found their special yet
+        Save();
+    }
+
+    public void UnlockSpecial()
+    {
+        Data.specialUnlocked = true;
         Save();
     }
 

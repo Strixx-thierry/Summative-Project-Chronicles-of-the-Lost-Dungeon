@@ -7,6 +7,7 @@ public class SaveData
 {
     public string playerName = "";
     public int selectedClass = 0;
+    public bool specialUnlocked = false;
     public int highestUnlocked = 1;
     public List<int> completed = new List<int>();
     public List<float> bestTimes = new List<float>();   // index = level-1

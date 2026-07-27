@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8295615515882402762}
   - component: {fileID: 3447394383851219201}
   - component: {fileID: 6782838904020040166}
+  - component: {fileID: 7803203376064443517}
   m_Layer: 0
   m_Name: Enemy_Boss
   m_TagString: Untagged
@@ -134,6 +135,20 @@ MonoBehaviour:
   attackCooldown: 1.6
   model: {fileID: 6355226833780674491}
   modelYawOffset: 0
+--- !u!114 &7803203376064443517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1867307829918410355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f1ebfcf29eaeff41bb951a9fd212731, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DamageFlash
+  flashColor: {r: 1, g: 0.2, b: 0.15, a: 1}
+  duration: 0.12
 --- !u!1001 &6897531519120336976
 PrefabInstance:
   m_ObjectHideFlags: 0

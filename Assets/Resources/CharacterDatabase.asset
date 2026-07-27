@@ -16,12 +16,12 @@ MonoBehaviour:
   - displayName: Knight
     model: {fileID: 919132149155446097, guid: 02ea767f1ebec9d41bc8807ead021814, type: 3}
     controller: {fileID: 9100000, guid: f415f4bc7734bad408de8d2183077c48, type: 2}
-    ability: 0
+    ability: 1
   - displayName: Gunner
     model: {fileID: 919132149155446097, guid: 4d4a06b2dff93df4eba9e06054355959, type: 3}
     controller: {fileID: 9100000, guid: 24cd4e85dd80ceb44a6af8bbadc7d3fd, type: 2}
-    ability: 1
+    ability: 2
   - displayName: Brawler
     model: {fileID: 919132149155446097, guid: 5929920bce12b774ca1f3825409c8fb8, type: 3}
     controller: {fileID: 9100000, guid: c1928c84122fd074ebb7d77f07626352, type: 2}
-    ability: 2
+    ability: 3

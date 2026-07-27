@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8172518610228875788}
   - component: {fileID: 5077426265994350266}
   - component: {fileID: 4064739449281763725}
+  - component: {fileID: 2523945919359678114}
   m_Layer: 0
   m_Name: Enemy_Maw
   m_TagString: Untagged
@@ -134,6 +135,20 @@ MonoBehaviour:
   attackCooldown: 1.6
   model: {fileID: 8855928280178790682}
   modelYawOffset: 0
+--- !u!114 &2523945919359678114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4780275142744822304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f1ebfcf29eaeff41bb951a9fd212731, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DamageFlash
+  flashColor: {r: 1, g: 0.2, b: 0.15, a: 1}
+  duration: 0.12
 --- !u!1001 &9037645439827572465
 PrefabInstance:
   m_ObjectHideFlags: 0
