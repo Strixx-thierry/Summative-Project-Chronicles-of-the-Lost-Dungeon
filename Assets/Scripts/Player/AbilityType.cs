@@ -1,7 +1,8 @@
-// The attack style a character class uses (drives the Strategy ability later)
+// Slot 1 is always Slash; the class special (slot 2) is one of the rest, unlocked by a pickup
 public enum AbilityType
 {
-    Sword,  // melee arc
-    Gun,    // ranged, pooled projectiles
-    Fists   // fast melee punches
+    Slash,       // basic melee arc, all classes start with this
+    SpinSlash,   // Knight special: 360 degree AoE
+    Gun,         // Gunner special: pooled projectiles
+    SuperPunch   // Brawler special: heavy single hit
 }

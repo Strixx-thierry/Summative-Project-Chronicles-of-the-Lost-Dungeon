@@ -29,10 +29,16 @@ public class AbilityController : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
         if (projectilePrefab != null) projectilePool = new ObjectPool<Projectile>(projectilePrefab, 10);
 
-        // Start with the ability that matches the chosen class
-        var loader = GetComponent<PlayerModelLoader>();
-        AbilityType startType = loader != null ? loader.Ability : AbilityType.Sword;
-        abilities.Add(Create(startType));
+        // Everyone starts with the basic Slash
+        abilities.Add(Create(AbilityType.Slash));
+
+        // If the class special was already picked up (saved), start with it too
+        if (SaveManager.Instance.Data.specialUnlocked)
+        {
+            var loader = GetComponent<PlayerModelLoader>();
+            AbilityType special = loader != null ? loader.Ability : AbilityType.Gun;
+            abilities.Add(Create(special));
+        }
         OnAbilitiesChanged?.Invoke();
     }
 
@@ -81,8 +87,9 @@ public class AbilityController : MonoBehaviour
 
     IAbility Create(AbilityType type) => type switch
     {
+        AbilityType.SpinSlash => new SpinSlashAbility(),
         AbilityType.Gun => new GunAbility(),
-        AbilityType.Fists => new FistsAbility(),
+        AbilityType.SuperPunch => new SuperPunchAbility(),
         _ => new SwordAbility(),
     };
 }

@@ -1,13 +1,13 @@
 using UnityEngine;
 
-// Short fast melee punch, weaker but quicker than the sword (Strategy)
-public class FistsAbility : IAbility
+// Brawler special: slow, heavy single-target punch in front
+public class SuperPunchAbility : IAbility
 {
-    public string Name => "Fists";
-    public float Cooldown => 0.25f;
+    public string Name => "Super Punch";
+    public float Cooldown => 1.1f;
 
-    const float Range = 1.6f;
-    const float HalfArc = 60f;
+    const float Range = 2f;
+    const float HalfArc = 55f;
 
     public void Activate(AbilityContext ctx)
     {
@@ -26,7 +26,7 @@ public class FistsAbility : IAbility
             if (Vector3.Angle(fwd, to) > HalfArc) continue;
 
             int def = col.GetComponentInParent<Enemy>()?.Defense ?? 0;
-            target.TakeDamage(DamageCalculator.Compute(Mathf.RoundToInt(ctx.damage * 0.6f), def, 0f));
+            target.TakeDamage(DamageCalculator.Compute(ctx.damage * 3, def, 0f));   // heavy hit
         }
     }
 }
