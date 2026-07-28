@@ -135,6 +135,7 @@ MonoBehaviour:
   attackCooldown: 1.6
   model: {fileID: 4837988501290885540}
   modelYawOffset: 0
+  behaviourType: 0
 --- !u!114 &5612424291830649402
 MonoBehaviour:
   m_ObjectHideFlags: 0
