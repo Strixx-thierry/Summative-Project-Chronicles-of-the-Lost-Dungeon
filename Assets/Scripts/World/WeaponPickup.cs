@@ -27,8 +27,8 @@ public class WeaponPickup : MonoBehaviour
             AbilityType.SpinSlash => "greatsword",
             _ => "dagger",
         };
-        WeaponInfoService.Instance.Fetch(slug, info =>
-            Toast.Instance.Show(info != null ? "Acquired: " + info : "New weapon acquired"));
+        WeaponInfoService.Instance.FetchShort(slug, info =>
+            Toast.Instance.Show(info != null ? "Acquired: " + info + "   [I] Inspect" : "New weapon acquired   [I] Inspect"));
 
         if (AudioManager.Instance != null) AudioManager.Instance.PlayClick();
         Destroy(gameObject);

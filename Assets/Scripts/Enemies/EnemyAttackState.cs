@@ -1,6 +1,6 @@
 using UnityEngine;
 
-// Faces the player and swings on a cooldown; chases again if the player backs away
+// Faces the player and runs the enemy's behaviour attack on a cooldown; chases if the player escapes
 public class EnemyAttackState : IEnemyState
 {
     private float timer;
@@ -8,12 +8,14 @@ public class EnemyAttackState : IEnemyState
     public void Enter(EnemyAI enemy)
     {
         enemy.StopMoving();
-        timer = 0.3f;   // small wind-up before the first swing
+        timer = 0.3f;   // small wind-up before the first attack
     }
 
     public void Tick(EnemyAI enemy)
     {
-        if (enemy.DistanceToPlayer() > enemy.AttackRange + 0.5f)
+        if (enemy.Busy) return;   // a behaviour attack (ram/smash) is playing out
+
+        if (enemy.DistanceToPlayer() > enemy.AttackRange + 0.6f)
         {
             enemy.SetState(new EnemyChaseState());
             return;
@@ -25,8 +27,7 @@ public class EnemyAttackState : IEnemyState
         timer -= Time.deltaTime;
         if (timer <= 0f)
         {
-            enemy.TriggerAttack();
-            enemy.TryDamagePlayer();
+            enemy.StartAttack();
             timer = enemy.AttackCooldown;
         }
     }

@@ -12,15 +12,18 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private float attackCooldown = 1.6f;
     [SerializeField] private Transform model;
     [SerializeField] private float modelYawOffset = 180f;
+    [SerializeField] private EnemyBehaviourType behaviourType = EnemyBehaviourType.Simple;
 
     public Transform Player { get; private set; }
     public Animator Animator { get; private set; }
     public float DetectRange => detectRange;
     public float AttackRange => attackRange;
     public float AttackCooldown => attackCooldown;
+    public bool Busy { get; private set; }
 
     private Rigidbody rb;
     private IEnemyState state;
+    private IEnemyBehaviour behaviour;
     private bool dead;
 
     void Awake()
@@ -29,9 +32,52 @@ public class EnemyAI : MonoBehaviour
         rb.freezeRotation = true;
         if (model == null) model = transform;
         Animator = GetComponentInChildren<Animator>();
+        behaviour = CreateBehaviour(behaviourType);
         var health = GetComponent<Health>();
         if (health != null) health.OnDied += OnDied;
     }
+
+    IEnemyBehaviour CreateBehaviour(EnemyBehaviourType type) => type switch
+    {
+        EnemyBehaviourType.Ram => new RamBehaviour(),
+        EnemyBehaviourType.JumpSmash => new JumpSmashBehaviour(),
+        _ => new SimpleBehaviour(),
+    };
+
+    // Runs the current behaviour's attack sequence; Busy gates the state machine meanwhile
+    public void StartAttack()
+    {
+        if (!Busy) StartCoroutine(RunAttack());
+    }
+
+    System.Collections.IEnumerator RunAttack()
+    {
+        Busy = true;
+        yield return behaviour.Attack(this);
+        Busy = false;
+    }
+
+    // ---- helpers used by behaviours ----
+    public int AttackDamage => attackDamage;
+    public Vector3 DirectionToPlayer() =>
+        Player != null ? (Flat(Player.position) - Flat(transform.position)).normalized : transform.forward;
+    public Vector3 PlayerPosition(float fallbackAhead) =>
+        Player != null ? Player.position : transform.position + transform.forward * fallbackAhead;
+    public void PlayAnim(string trigger) { if (Animator != null) Animator.SetTrigger(trigger); }
+    public void SetPosition(Vector3 pos) => transform.position = pos;
+    public void ChargeToward(Vector3 dir, float speed)
+    {
+        dir.y = 0; dir.Normalize();
+        rb.linearVelocity = new Vector3(dir.x * speed, rb.linearVelocity.y, dir.z * speed);
+        FaceDirectionPublic(dir);
+    }
+    public void DamageInRadius(float radius)
+    {
+        if (Player == null) return;
+        if (Vector3.Distance(Flat(transform.position), Flat(Player.position)) <= radius)
+            Player.GetComponent<Health>()?.TakeDamage(attackDamage);
+    }
+    public void FaceDirectionPublic(Vector3 dir) => FaceDirection(dir);
 
     void Start()
     {
