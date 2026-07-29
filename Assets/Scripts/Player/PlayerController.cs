@@ -39,6 +39,15 @@ public class PlayerController : MonoBehaviour
 
     // Attacks are handled by AbilityController now
 
+    // Snap the model to face the aim direction (called when attacking)
+    public void FaceAim(Vector3 dir)
+    {
+        dir.y = 0;
+        if (dir.sqrMagnitude < 0.001f) return;
+        ModelFacing = Quaternion.LookRotation(dir.normalized) * offset;
+        if (model != null) model.rotation = ModelFacing;
+    }
+
     void FixedUpdate()
     {
         Vector2 input = ReadInput();

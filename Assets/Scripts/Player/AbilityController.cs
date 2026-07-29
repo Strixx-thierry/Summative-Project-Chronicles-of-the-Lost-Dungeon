@@ -14,6 +14,8 @@ public class AbilityController : MonoBehaviour
     private float cooldownTimer;
     private Animator animator;
     private ObjectPool<Projectile> projectilePool;
+    private CameraFollow cam;
+    private PlayerController playerController;
 
     public IReadOnlyList<IAbility> Abilities => abilities;
     public int CurrentIndex => current;
@@ -27,6 +29,8 @@ public class AbilityController : MonoBehaviour
     void Start()
     {
         animator = GetComponentInChildren<Animator>();
+        playerController = GetComponent<PlayerController>();
+        cam = Camera.main != null ? Camera.main.GetComponent<CameraFollow>() : null;
         if (projectilePrefab != null) projectilePool = new ObjectPool<Projectile>(projectilePrefab, 10);
 
         // Everyone starts with the basic Slash
@@ -59,10 +63,16 @@ public class AbilityController : MonoBehaviour
         if (cooldownTimer > 0f || current >= abilities.Count) return;
         var ability = abilities[current];
         cooldownTimer = ability.Cooldown;
+
+        // Aim where the camera looks, and turn the player to face it
+        Vector3 aim = cam != null ? cam.FlatForward : (facing != null ? facing.forward : transform.forward);
+        if (playerController != null) playerController.FaceAim(aim);
+
         ability.Activate(new AbilityContext
         {
             owner = transform,
             facing = facing,
+            aimDirection = aim,
             animator = animator,
             projectilePool = projectilePool,
             damage = baseDamage,

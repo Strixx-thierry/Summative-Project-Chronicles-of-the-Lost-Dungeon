@@ -11,7 +11,8 @@ public class GunAbility : IAbility
         ctx.animator?.SetTrigger("Attack");
         if (ctx.projectilePool == null) return;
 
-        Vector3 dir = ctx.facing != null ? ctx.facing.forward : ctx.owner.forward;
+        Vector3 dir = ctx.aimDirection.sqrMagnitude > 0.001f ? ctx.aimDirection
+                    : (ctx.facing != null ? ctx.facing.forward : ctx.owner.forward);
         dir.y = 0; dir.Normalize();
 
         var projectile = ctx.projectilePool.Get();

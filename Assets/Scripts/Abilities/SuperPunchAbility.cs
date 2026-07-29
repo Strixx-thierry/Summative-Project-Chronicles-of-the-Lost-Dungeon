@@ -13,7 +13,8 @@ public class SuperPunchAbility : IAbility
     {
         ctx.animator?.SetTrigger("Attack");
 
-        Vector3 fwd = ctx.facing != null ? ctx.facing.forward : ctx.owner.forward;
+        Vector3 fwd = ctx.aimDirection.sqrMagnitude > 0.001f ? ctx.aimDirection
+                    : (ctx.facing != null ? ctx.facing.forward : ctx.owner.forward);
         fwd.y = 0;
 
         foreach (var col in Physics.OverlapSphere(ctx.owner.position, Range))

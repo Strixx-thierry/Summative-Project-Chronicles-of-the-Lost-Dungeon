@@ -75,6 +75,17 @@ public class WeaponInspect : MonoBehaviour
         scaler.referenceResolution = new Vector2(1920, 1080);
         canvasGo.AddComponent<GraphicRaycaster>();
 
+        // centre crosshair
+        var cross = new GameObject("Crosshair", typeof(RectTransform), typeof(Image));
+        cross.transform.SetParent(canvasGo.transform, false);
+        var crt = (RectTransform)cross.transform;
+        crt.anchorMin = crt.anchorMax = crt.pivot = new Vector2(0.5f, 0.5f);
+        crt.anchoredPosition = Vector2.zero;
+        crt.sizeDelta = new Vector2(10, 10);
+        var cimg = cross.GetComponent<Image>();
+        cimg.color = new Color(1f, 1f, 1f, 0.7f);
+        cimg.raycastTarget = false;
+
         // bottom-centre indicator
         indicator = Text(canvasGo.transform, "Indicator", 26, TextAnchor(0.5f, 0), new Vector2(0, 40), new Vector2(700, 40));
         indicator.alignment = TextAlignmentOptions.Center;

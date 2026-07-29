@@ -13,6 +13,7 @@ public class AbilityContext
 {
     public Transform owner;
     public Transform facing;
+    public Vector3 aimDirection;   // where the camera/crosshair points
     public Animator animator;
     public ObjectPool<Projectile> projectilePool;
     public int damage;

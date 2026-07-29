@@ -12,6 +12,11 @@ public class WeaponHolder : MonoBehaviour
     [SerializeField] private Vector3 eulerOffset = new Vector3(0f, 0f, 90f);
     [SerializeField] private float targetLength = 0.8f;
 
+    [Header("Gun-specific (barrel points forward, not like a blade)")]
+    [SerializeField] private Vector3 gunPosOffset = new Vector3(0.05f, 0.05f, 0.1f);
+    [SerializeField] private Vector3 gunEulerOffset = new Vector3(0f, 90f, 0f);
+    [SerializeField] private float gunTargetLength = 0.6f;
+
     private GameObject current;
 
     void Start()
@@ -37,22 +42,26 @@ public class WeaponHolder : MonoBehaviour
                           : null;   // basic Slash = empty hands
 
         if (current != null) Destroy(current);
-        if (prefab != null) Attach(prefab);
+        if (prefab != null) Attach(prefab, prefab == gunPrefab);
     }
 
-    void Attach(GameObject prefab)
+    void Attach(GameObject prefab, bool isGun)
     {
         var hand = FindBone(handBoneName);
         if (hand == null) { Debug.LogWarning($"WeaponHolder: bone '{handBoneName}' not found."); return; }
 
+        Vector3 pos = isGun ? gunPosOffset : posOffset;
+        Vector3 euler = isGun ? gunEulerOffset : eulerOffset;
+        float length = isGun ? gunTargetLength : targetLength;
+
         current = Instantiate(prefab, hand);
-        current.transform.localEulerAngles = eulerOffset;
+        current.transform.localEulerAngles = euler;
 
         Vector3 ls = hand.lossyScale;
         current.transform.localPosition = new Vector3(
-            posOffset.x / Mathf.Max(0.0001f, ls.x),
-            posOffset.y / Mathf.Max(0.0001f, ls.y),
-            posOffset.z / Mathf.Max(0.0001f, ls.z));
+            pos.x / Mathf.Max(0.0001f, ls.x),
+            pos.y / Mathf.Max(0.0001f, ls.y),
+            pos.z / Mathf.Max(0.0001f, ls.z));
         current.transform.localScale = Vector3.one;
 
         var rends = current.GetComponentsInChildren<Renderer>();
@@ -61,7 +70,7 @@ public class WeaponHolder : MonoBehaviour
             var b = rends[0].bounds;
             foreach (var r in rends) b.Encapsulate(r.bounds);
             float maxDim = Mathf.Max(b.size.x, b.size.y, b.size.z);
-            if (maxDim > 0.0001f) current.transform.localScale *= targetLength / maxDim;
+            if (maxDim > 0.0001f) current.transform.localScale *= length / maxDim;
         }
     }
 
