@@ -52,6 +52,8 @@ public class AbilityController : MonoBehaviour
         var kb = Keyboard.current;
         if (kb != null)
         {
+            // Q swaps to the next weapon (also driven by the mobile SWAP button)
+            if (kb.qKey.wasPressedThisFrame) SwapNext();
             if (kb.digit1Key.wasPressedThisFrame) Switch(0);
             if (kb.digit2Key.wasPressedThisFrame) Switch(1);
         }
@@ -93,6 +95,13 @@ public class AbilityController : MonoBehaviour
         if (index < 0 || index >= abilities.Count) return;
         current = index;
         OnAbilitiesChanged?.Invoke();
+    }
+
+    // Cycle to the next weapon (one-button swap)
+    void SwapNext()
+    {
+        if (abilities.Count < 2) return;
+        Switch((current + 1) % abilities.Count);
     }
 
     IAbility Create(AbilityType type) => type switch
