@@ -27,12 +27,17 @@ public class HUDController : MonoBehaviour
             health.OnChanged += SetHealth;
             SetHealth(health.Current, health.Max);
         }
-        SetCoins(0);
+        SetCoins(RunStats.Coins);
         SetKeys(0);
         levelNameText.text = "Level " + RunStats.LevelNumber + " — " + RunStats.LevelName;
         SetObjective(RunStats.EnemiesDefeated, RunStats.TotalEnemies);
         CreateTimer();
+        GameEvents.ItemCollected += OnItemCollected;
     }
+
+    void OnDestroy() => GameEvents.ItemCollected -= OnItemCollected;
+
+    void OnItemCollected(int value) => SetCoins(RunStats.Coins);
 
     void Update()
     {
