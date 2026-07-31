@@ -4,10 +4,17 @@
 /[Oo]bj/
 /[Bb]uild/
 /[Bb]uilds/
+/[Ee]xport/
+/export/
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
 /[Mm]emoryCaptures/
 /[Rr]ecordings/
+
+# Build outputs and test-runner artifacts
+*.apk
+*.aab
+/Assets/Resources/PerformanceTestRun*.json*
 
 # Never ignore Asset meta data
 !/[Aa]ssets/**/*.meta
