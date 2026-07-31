@@ -40,7 +40,9 @@ public class EnemyAI : MonoBehaviour
     IEnemyBehaviour CreateBehaviour(EnemyBehaviourType type) => type switch
     {
         EnemyBehaviourType.Ram => new RamBehaviour(),
-        EnemyBehaviourType.JumpSmash => new JumpSmashBehaviour(),
+        EnemyBehaviourType.JumpSmash => new JumpSmashBehaviour(),        
+        EnemyBehaviourType.PhaseStrike => new PhaseStrikeBehaviour(),
+
         _ => new SimpleBehaviour(),
     };
 

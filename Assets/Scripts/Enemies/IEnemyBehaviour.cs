@@ -11,5 +11,6 @@ public enum EnemyBehaviourType
 {
     Simple,     // zombie: step in and swipe
     Ram,        // maw: wind up, charge, recover
-    JumpSmash   // boss: leap and slam an area
+    JumpSmash,   // boss: leap and slam an area
+    PhaseStrike  //Adding enemey: flashstep 
 }
