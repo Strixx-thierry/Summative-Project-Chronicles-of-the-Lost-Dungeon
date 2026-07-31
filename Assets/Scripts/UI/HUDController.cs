@@ -74,9 +74,9 @@ public class HUDController : MonoBehaviour
             healthSegments.GetChild(i).GetComponent<Image>().color = i < lit ? SegmentOn : SegmentOff;
     }
 
-    public void SetCoins(int amount) => coinsText.text = amount.ToString("N0");
+    public void SetCoins(int amount) { if (coinsText != null) coinsText.text = amount.ToString("N0"); }
 
-    public void SetKeys(int amount) => keysText.text = amount.ToString();
+    public void SetKeys(int amount) { if (keysText != null) keysText.text = amount.ToString(); }
 
     public void SetObjective(int done, int total)
     {
