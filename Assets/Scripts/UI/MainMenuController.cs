@@ -46,6 +46,9 @@ public class MainMenuController : MonoBehaviour
     }
 
     public void OnLevelSelectClicked() => ShowOnly(levelSelectPanel);
+
+    // Wipes the save so the game starts from zero (add a button in Settings)
+    public void OnResetProgress() => SaveManager.Instance.ResetProgress();
     public void OnSettingsClicked() => ShowOnly(settingsPanel);
     public void OnBackClicked() => ShowOnly(mainMenuPanel);
 

@@ -56,6 +56,13 @@ public class SaveManager : MonoBehaviour
         Save();
     }
 
+    // Wipe all progress back to a fresh game
+    public void ResetProgress()
+    {
+        Data = new SaveData();
+        Save();
+    }
+
     public void CompleteLevel(int level, int coins, float time)
     {
         Progression.Complete(Data, level, coins, time);
