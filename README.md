@@ -52,7 +52,7 @@ The game keeps systems separate so new things are easy to add:
 Runs on **WebGL, Windows, and Android**. The mobile joystick/buttons only appear on phones, using Unity conditional compilation (`#if UNITY_ANDROID`).
 
 ## Tests
-11 unit tests (NUnit) check the core logic — damage, saving, level unlocking, and the object pool.
+8 unit tests (NUnit) check the core logic — damage, saving, level unlocking, and the object pool.
 Run them in Unity: **Window → General → Test Runner → EditMode → Run All**.
 
 ## Run & Build
